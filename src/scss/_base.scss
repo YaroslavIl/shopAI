@@ -1,0 +1,123 @@
+@use "variables" as *;
+
+// ============================================================
+// Base elements & shared utilities
+// ============================================================
+
+// Buttons
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $space-1;
+  padding: 0.875rem 1.75rem;
+  font-size: $fs-sm;
+  font-weight: $fw-medium;
+  letter-spacing: 0.02em;
+  border-radius: $radius-sm;
+  transition: background-color $dur-base $ease,
+    color $dur-base $ease,
+    border-color $dur-base $ease,
+    transform $dur-fast $ease,
+    box-shadow $dur-base $ease;
+  white-space: nowrap;
+
+  &:active {
+    transform: scale(0.97);
+  }
+
+  &--primary {
+    background: $color-primary;
+    color: $neutral-50;
+
+    &:hover {
+      background: $color-primary-soft;
+      box-shadow: $shadow-md;
+      transform: translateY(-1px);
+    }
+
+    &:active {
+      transform: scale(0.97);
+    }
+  }
+
+  &--ghost {
+    background: transparent;
+    color: $color-primary;
+    border: 1px solid $neutral-300;
+
+    &:hover {
+      border-color: $color-primary;
+      transform: translateY(-1px);
+    }
+  }
+
+  &--full {
+    width: 100%;
+  }
+}
+
+// Link with arrow
+.link-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-1;
+  font-size: $fs-sm;
+  font-weight: $fw-medium;
+  color: $color-primary;
+  border-bottom: 1px solid $color-primary;
+  padding-bottom: 2px;
+  transition: gap $dur-base $ease, color $dur-base $ease;
+
+  svg {
+    transition: transform $dur-base $ease;
+  }
+
+  &:hover {
+    gap: 0.75rem;
+
+    svg {
+      transform: translateX(3px);
+    }
+  }
+}
+
+// Eyebrow label
+.eyebrow {
+  font-size: $fs-xs;
+  font-weight: $fw-medium;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: $color-accent;
+}
+
+// Reveal-on-scroll (used by Intersection Observer)
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity $dur-slow $ease-out,
+    transform $dur-slow $ease-out;
+  will-change: opacity, transform;
+
+  &.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Container helper
+.container {
+  max-width: $container-max;
+  margin: 0 auto;
+  padding-inline: $container-pad;
+}
+
+// Lazy image fade
+[data-lazy-img] {
+  opacity: 0;
+  transition: opacity $dur-slow $ease-out;
+
+  &.is-loaded {
+    opacity: 1;
+  }
+}

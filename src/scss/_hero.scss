@@ -1,0 +1,178 @@
+@use "variables" as *;
+
+// ============================================================
+// Hero
+// ============================================================
+.hero {
+  position: relative;
+  padding: $space-5 $container-pad $space-4;
+  background: $color-secondary;
+
+  &__inner {
+    max-width: $container-max;
+    margin: 0 auto;
+  }
+
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: $fs-xs;
+    color: $neutral-500;
+    margin-bottom: $space-3;
+    opacity: 0;
+    animation: fadeUp $dur-slow $ease-out 0.1s forwards;
+
+    &__link {
+      transition: color $dur-base $ease;
+
+      &:hover {
+        color: $color-primary;
+      }
+    }
+
+    &__sep {
+      color: $neutral-400;
+    }
+
+    &__current {
+      color: $color-primary;
+    }
+  }
+
+  &__title {
+    font-family: $font-serif;
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: $fw-light;
+    line-height: $lh-tight;
+    letter-spacing: -0.01em;
+    color: $color-primary;
+    margin-bottom: $space-2;
+    opacity: 0;
+    animation: fadeUp $dur-slow $ease-out 0.2s forwards;
+  }
+
+  &__lede {
+    max-width: 36rem;
+    font-size: $fs-md;
+    line-height: $lh-loose;
+    color: $neutral-600;
+    opacity: 0;
+    animation: fadeUp $dur-slow $ease-out 0.3s forwards;
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (min-width: $bp-md) {
+  .hero__inner {
+    position: relative;
+    min-height: 22rem;
+    padding-right: 48%;
+  }
+
+  .hero-slider {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 52%;
+  }
+}
+
+.hero-slider {
+  margin-top: $space-4;
+
+  &__viewport {
+    overflow: hidden;
+    position: relative;
+    background: $color-secondary-deep;
+    aspect-ratio: 21 / 10;
+  }
+
+  &__track {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  &__slide {
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    opacity: 0;
+    transition: opacity 900ms $ease-in-out;
+
+    &.is-active {
+      opacity: 1;
+    }
+
+    img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      transform: scale(1.04);
+      transition: transform 5000ms $ease-out;
+    }
+
+    &.is-active img {
+      transform: scale(1);
+    }
+  }
+
+  &__controls {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    right: $space-2;
+    bottom: $space-2;
+    z-index: 1;
+    gap: $space-1;
+  }
+
+  &__control {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    color: $neutral-0;
+    background: rgba(26, 26, 26, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: color $dur-base $ease, background-color $dur-base $ease, transform $dur-base $ease;
+
+    &:hover,
+    &:focus-visible {
+      color: $color-primary;
+      background: $neutral-0;
+      transform: translateY(-2px);
+    }
+  }
+}
+
+@media (max-width: $bp-md - 1) {
+  .hero-slider {
+    margin-top: $space-4;
+  }
+}
+
+@media (max-width: $bp-sm - 1) {
+  .hero {
+    padding: $space-4 $space-2 $space-3;
+  }
+
+  .hero-slider {
+    margin-top: $space-3;
+  }
+}
