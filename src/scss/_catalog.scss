@@ -1,0 +1,393 @@
+@use "variables" as *;
+
+// ============================================================
+// Filters
+// ============================================================
+.filters {
+  position: sticky;
+  top: 72px;
+  z-index: 90;
+  background: $neutral-50;
+  border-bottom: 1px solid $neutral-200;
+  transition: box-shadow $dur-base $ease, opacity $dur-slow $ease-out, transform $dur-slow $ease-out;
+  opacity: 0;
+  transform: translateY(-16px);
+
+  &.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  &.is-stuck {
+    box-shadow: $shadow-sm;
+  }
+
+  &.is-stuck {
+    box-shadow: $shadow-sm;
+  }
+
+  &__inner {
+    max-width: $container-max;
+    margin: 0 auto;
+    padding: $space-1 $container-pad;
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+    min-height: 56px;
+  }
+
+  &__chips-wrap {
+    display: flex;
+    align-items: center;
+    gap: $space-1;
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__chips {
+    display: flex;
+    gap: $space-1;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    padding: 4px 0;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  &__arrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    color: $neutral-500;
+    background: $neutral-100;
+    flex-shrink: 0;
+    transition: background-color $dur-base $ease, color $dur-base $ease, opacity $dur-base $ease;
+
+    &:hover {
+      background: $neutral-200;
+      color: $color-primary;
+    }
+
+    &[hidden] {
+      display: none;
+    }
+  }
+
+  &__right {
+    display: flex;
+    align-items: center;
+    gap: $space-1;
+    flex-shrink: 0;
+  }
+
+  &__sort-icon {
+    display: inline-flex;
+    color: $neutral-600;
+    transition: color $dur-base $ease;
+
+    &:hover {
+      color: $color-primary;
+    }
+  }
+
+  &__select-wrap {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  &__select {
+    appearance: none;
+    -webkit-appearance: none;
+    background: transparent;
+    border: 1px solid $neutral-300;
+    border-radius: $radius-sm;
+    padding: 0.45rem 2rem 0.45rem 0.75rem;
+    font-size: $fs-sm;
+    color: $color-primary;
+    cursor: pointer;
+    transition: border-color $dur-base $ease;
+
+    &:hover {
+      border-color: $color-primary;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: $color-accent;
+    }
+  }
+
+  &__select-arrow {
+    position: absolute;
+    right: 0.5rem;
+    pointer-events: none;
+    color: $neutral-500;
+  }
+}
+
+// Chips
+.chip {
+  padding: 0.4rem 1rem;
+  font-size: $fs-sm;
+  font-weight: $fw-regular;
+  color: $neutral-600;
+  border: 1px solid $neutral-300;
+  border-radius: 999px;
+  background: transparent;
+  white-space: nowrap;
+  transition: all $dur-base $ease;
+
+  &:hover {
+    border-color: $color-primary;
+    color: $color-primary;
+  }
+
+  &.is-active {
+    background: $color-primary;
+    color: $neutral-50;
+    border-color: $color-primary;
+  }
+}
+
+// ============================================================
+// Catalog
+// ============================================================
+.catalog {
+  padding: $space-4 $container-pad $space-7;
+  background: $neutral-50;
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity $dur-slow $ease-out, transform $dur-slow $ease-out;
+  will-change: opacity, transform;
+
+  &.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  &__inner {
+    max-width: $container-max;
+    margin: 0 auto;
+  }
+
+  &__empty {
+    text-align: center;
+    padding: $space-7 0;
+    font-size: $fs-md;
+    color: $neutral-400;
+    font-family: $font-serif;
+    font-style: italic;
+  }
+}
+
+// ============================================================
+// Product grid
+// ============================================================
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: $space-3;
+}
+
+@media (max-width: $bp-lg - 1) {
+  .product-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: $bp-md - 1) {
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: $space-2;
+  }
+}
+
+@media (max-width: $bp-sm - 1) {
+  .product-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+// ============================================================
+// Product card
+// ============================================================
+.product-card {
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+
+  &__media {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    border-radius: $radius-lg;
+    background: $card-bg;
+    margin-bottom: $space-2;
+    transition: box-shadow $dur-base $ease, transform $dur-base $ease;
+  }
+
+  &__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform $dur-slow $ease;
+  }
+
+  &:hover &__img {
+    transform: scale(1.05);
+  }
+
+  &:hover &__media {
+    box-shadow: $shadow-card;
+    transform: translateY(-4px);
+  }
+
+  &__overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: $space-2;
+    background: linear-gradient(to top, rgba(26, 26, 26, 0.35), transparent 50%);
+    opacity: 0;
+    transition: opacity $dur-base $ease;
+  }
+
+  &:hover &__overlay {
+    opacity: 1;
+  }
+
+  &__add {
+    padding: 0.6rem 1.5rem;
+    font-size: $fs-sm;
+    font-weight: $fw-medium;
+    color: $neutral-50;
+    background: $color-primary;
+    border-radius: $radius-sm;
+    transform: translateY(8px);
+    transition: transform $dur-base $ease, background-color $dur-base $ease;
+
+    .product-card:hover & {
+      transform: translateY(0);
+    }
+
+    &:hover {
+      background: $color-primary-soft;
+    }
+
+    &:active {
+      transform: scale(0.96);
+    }
+  }
+
+  &__badge {
+    position: absolute;
+    top: $space-1;
+    left: $space-1;
+    padding: 0.25rem 0.625rem;
+    font-size: $fs-xs;
+    font-weight: $fw-medium;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    background: $neutral-50;
+    color: $color-primary;
+    border-radius: 999px;
+    z-index: 2;
+
+    &--new {
+      background: $color-primary;
+      color: $neutral-50;
+    }
+
+    &--limited {
+      background: $color-accent;
+      color: $neutral-50;
+    }
+  }
+
+  &__heart {
+    position: absolute;
+    top: $space-1;
+    right: $space-1;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: $neutral-700;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(4px);
+    z-index: 2;
+    transition: transform $dur-fast $ease, color $dur-base $ease, background-color $dur-base $ease;
+
+    &:hover {
+      transform: scale(1.1);
+      color: $color-error;
+    }
+
+    &:active {
+      transform: scale(0.9);
+    }
+
+    &.is-active {
+      color: $color-error;
+
+      svg {
+        fill: $color-error;
+      }
+    }
+  }
+
+  &__category {
+    font-size: $fs-xs;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: $neutral-400;
+    margin-bottom: 0.25rem;
+  }
+
+  &__name {
+    font-size: $fs-base;
+    font-weight: $fw-medium;
+    color: $color-primary;
+    margin-bottom: 0.125rem;
+  }
+
+  &__meta {
+    font-size: $fs-sm;
+    color: $neutral-500;
+    margin-bottom: $space-1;
+  }
+
+  &__price {
+    font-size: $fs-base;
+    font-weight: $fw-semibold;
+    color: $color-primary;
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: $bp-sm - 1) {
+  .product-card__overlay {
+    // keep overlay always visible on touch
+    opacity: 1;
+  }
+
+  .product-card__add {
+    transform: translateY(0);
+  }
+}

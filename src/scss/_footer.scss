@@ -1,0 +1,111 @@
+@use "variables" as *;
+
+// ============================================================
+// Footer
+// ============================================================
+.footer {
+  background: $neutral-100;
+  padding-top: $space-6;
+  border-top: 1px solid $neutral-200;
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity $dur-slow $ease-out, transform $dur-slow $ease-out;
+  will-change: opacity, transform;
+
+  &.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  &__inner {
+    max-width: $container-max;
+    margin: 0 auto;
+    padding: 0 $container-pad $space-5;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: $space-4;
+  }
+
+  &__brand {
+    max-width: 20rem;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity $dur-slow $ease-out, transform $dur-slow $ease-out;
+  }
+
+  &.is-visible &__brand {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0ms;
+  }
+
+  &__logo {
+    font-family: $font-serif;
+    font-size: $fs-xl;
+    font-weight: $fw-medium;
+    color: $color-primary;
+    display: block;
+    margin-bottom: $space-1;
+  }
+
+  &__tag {
+    font-size: $fs-sm;
+    line-height: $lh-loose;
+    color: $neutral-500;
+  }
+
+  &__col {
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity $dur-slow $ease-out, transform $dur-slow $ease-out;
+  }
+
+  &.is-visible &__col {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  &.is-visible &__col:nth-child(2) { transition-delay: 80ms; }
+  &.is-visible &__col:nth-child(3) { transition-delay: 160ms; }
+  &.is-visible &__col:nth-child(4) { transition-delay: 240ms; }
+
+  &__heading {
+    font-size: $fs-xs;
+    font-weight: $fw-semibold;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: $color-primary;
+    margin-bottom: $space-2;
+  }
+
+  &__link {
+    font-size: $fs-sm;
+    color: $neutral-600;
+    padding: 0.3rem 0;
+    transition: color $dur-base $ease, padding-left $dur-base $ease;
+
+    &:hover {
+      color: $color-primary;
+      padding-left: 4px;
+    }
+  }
+}
+
+@media (max-width: $bp-md - 1) {
+  .footer__inner {
+    grid-template-columns: 1fr 1fr;
+    gap: $space-3;
+  }
+
+  .footer__brand {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: $bp-sm - 1) {
+  .footer__inner {
+    grid-template-columns: 1fr;
+  }
+}

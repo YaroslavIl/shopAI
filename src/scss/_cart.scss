@@ -1,0 +1,347 @@
+@use "variables" as *;
+
+// ============================================================
+// Cart drawer — slides in from the right
+// ============================================================
+.cart {
+  position: fixed;
+  inset: 0;
+  z-index: $z-cart;
+
+  &[hidden] {
+    display: none;
+  }
+
+  &__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(26, 26, 26, 0.4);
+    opacity: 0;
+    animation: overlayIn $dur-base $ease forwards;
+  }
+
+  &.is-closing &__overlay {
+    animation: overlayOut $dur-base $ease forwards;
+  }
+
+  &__panel {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    max-width: 420px;
+    background: $neutral-50;
+    display: flex;
+    flex-direction: column;
+    box-shadow: $shadow-lg;
+    transform: translateX(100%);
+    animation: cartSlideIn $dur-base $ease forwards;
+  }
+
+  &.is-closing &__panel {
+    animation: cartSlideOut $dur-base $ease forwards;
+  }
+
+  &__head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: $space-2 $space-3;
+    border-bottom: 1px solid $neutral-200;
+  }
+
+  &__title {
+    font-family: $font-serif;
+    font-size: $fs-xl;
+    font-weight: $fw-medium;
+  }
+
+  &__subtitle {
+    font-size: $fs-sm;
+    color: $neutral-400;
+    margin-top: 2px;
+  }
+
+  &__close {
+    display: inline-flex;
+    color: $neutral-500;
+    transition: color $dur-base $ease, transform $dur-fast $ease;
+
+    &:hover {
+      color: $color-primary;
+      transform: rotate(90deg);
+    }
+  }
+
+  &__body {
+    flex: 1;
+    overflow-y: auto;
+    padding: $space-2 $space-3;
+  }
+
+  // Empty state
+  &__empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: $space-6 $space-2;
+    animation: fadeScaleIn $dur-slow $ease-out;
+  }
+
+  &__empty-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: $neutral-300;
+    background: $neutral-100;
+    margin-bottom: $space-2;
+  }
+
+  &__empty-title {
+    font-family: $font-serif;
+    font-size: $fs-lg;
+    font-weight: $fw-medium;
+    margin-bottom: $space-1;
+  }
+
+  &__empty-text {
+    font-size: $fs-sm;
+    color: $neutral-400;
+    line-height: $lh-loose;
+    max-width: 16rem;
+    margin-bottom: $space-3;
+  }
+
+  &__browse-btn {
+    padding: 0.7rem 1.5rem;
+    font-size: $fs-sm;
+    font-weight: $fw-medium;
+    color: $neutral-50;
+    background: $color-primary;
+    border-radius: $radius-sm;
+    transition: background-color $dur-base $ease, transform $dur-fast $ease;
+
+    &:hover {
+      background: $color-primary-soft;
+      transform: translateY(-1px);
+    }
+
+    &:active {
+      transform: scale(0.97);
+    }
+  }
+
+  // Footer
+  &__foot {
+    border-top: 1px solid $neutral-200;
+    padding: $space-2 $space-3;
+    display: flex;
+    flex-direction: column;
+    gap: $space-1;
+  }
+
+  &__subtotal-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: $fs-md;
+    font-weight: $fw-semibold;
+    color: $color-primary;
+  }
+
+  &__shipping-note {
+    font-size: $fs-xs;
+    color: $neutral-400;
+  }
+
+  &__checkout-btn {
+    width: 100%;
+    padding: 0.875rem;
+    font-size: $fs-sm;
+    font-weight: $fw-medium;
+    color: $neutral-50;
+    background: $color-primary;
+    border-radius: $radius-sm;
+    transition: background-color $dur-base $ease, transform $dur-fast $ease;
+
+    &:hover {
+      background: $color-primary-soft;
+      transform: translateY(-1px);
+    }
+
+    &:active {
+      transform: scale(0.97);
+    }
+  }
+}
+
+// Cart item
+.cart-item {
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  gap: $space-2;
+  padding: $space-2 0;
+  border-bottom: 1px solid $neutral-200;
+  animation: fadeUp $dur-base $ease-out;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &__img {
+    width: 64px;
+    height: 64px;
+    border-radius: $radius-sm;
+    object-fit: cover;
+    background: $neutral-100;
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+  }
+
+  &__name {
+    font-size: $fs-sm;
+    font-weight: $fw-medium;
+    color: $color-primary;
+  }
+
+  &__price {
+    font-size: $fs-sm;
+    color: $neutral-500;
+  }
+
+  &__qty {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    margin-top: 0.25rem;
+  }
+
+  &__qty-btn {
+    width: 24px;
+    height: 24px;
+    border: 1px solid $neutral-300;
+    border-radius: $radius-sm;
+    font-size: $fs-sm;
+    color: $neutral-600;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all $dur-fast $ease;
+
+    &:hover {
+      border-color: $color-primary;
+      color: $color-primary;
+    }
+
+    &:active {
+      transform: scale(0.9);
+    }
+  }
+
+  &__qty-val {
+    min-width: 24px;
+    text-align: center;
+    font-size: $fs-sm;
+  }
+
+  &__remove {
+    font-size: $fs-xs;
+    color: $neutral-400;
+    text-decoration: underline;
+    margin-top: 0.25rem;
+    align-self: start;
+    transition: color $dur-base $ease;
+
+    &:hover {
+      color: $color-error;
+    }
+  }
+}
+
+@keyframes cartSlideIn {
+  from { transform: translateX(100%); }
+  to   { transform: translateX(0); }
+}
+
+@keyframes cartSlideOut {
+  from { transform: translateX(0); }
+  to   { transform: translateX(100%); }
+}
+
+@keyframes overlayIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes overlayOut {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+@keyframes fadeScaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// ============================================================
+// Back-to-top button
+// ============================================================
+.back-top {
+  position: fixed;
+  bottom: $space-3;
+  right: $space-3;
+  z-index: $z-back-top;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: $color-primary;
+  color: $neutral-50;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: $shadow-md;
+  opacity: 0;
+  transform: translateY(16px) scale(0.8);
+  pointer-events: none;
+  transition: opacity $dur-base $ease, transform $dur-base $ease, background-color $dur-base $ease;
+
+  &.is-visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+  }
+
+  &:hover {
+    background: $color-primary-soft;
+    transform: translateY(-2px) scale(1.05);
+  }
+
+  &:active {
+    transform: scale(0.92);
+  }
+}
